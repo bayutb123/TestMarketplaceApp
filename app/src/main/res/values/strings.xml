@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">GoBarter</string>
+    <string name="dummy_product_title">MacBook Air 13" M1 2020</string>
+    <string name="dummy_product_description">MacBook Air 13" M1 2020
+Fisik Like New, tidak ada dent , scratch apapun.
+Fungsi semua normal
+NO MINUS
+RAM 8GB
+SSD 256GB
+Colour : Silver
+CC 28 , Baterai Health 100%
+Kelengkapan fullset box, S/N sesuai box</string>
+    <string name="dummy_seller_address">Jakarta Pusat, 23 Juni 2023</string>
+    <string name="dummy_product_price">Rp 12.000.000</string>
+</resources>
