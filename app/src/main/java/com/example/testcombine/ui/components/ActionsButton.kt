@@ -63,7 +63,7 @@ fun ActionButton(
 @Preview(showBackground = true)
 @Composable
 private fun ActionButtonPreview() {
-    TestCombineTheme() {
+    TestCombineTheme {
         ActionButton()
     }
 }
