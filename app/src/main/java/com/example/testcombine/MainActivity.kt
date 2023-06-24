@@ -36,28 +36,9 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Scaffold(
-                        topBar = {
-                            TopAppBar(
-                                title = {
-                                    Text("Detail Produk")
-                                },
-                                navigationIcon = {
-                                    IconButton(onClick = {
-                                        showToast(this, "Back Pressed")
-                                    }) {
-                                        Icon(
-                                            imageVector = Icons.Default.ArrowBack,
-                                            contentDescription = "Back"
-                                        )
-                                    }
-                                }
-                            )
-                        }
-                    ) { contentPadding ->
-                        App(viewModel = viewModel, modifier = Modifier.padding(contentPadding), this)
-                    }
 
+
+                    App(viewModel = viewModel, context = this)
                 }
             }
         }

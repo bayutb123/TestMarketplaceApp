@@ -12,18 +12,32 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.testcombine.ui.screens.detail.DetailScreen
 import com.example.testcombine.ui.screens.Screen
+import com.example.testcombine.ui.screens.home.HomeScreen
 import com.example.testcombine.ui.theme.TestCombineTheme
 
 @Composable
 fun App(
     viewModel: AppViewModel,
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
     context: Context
 ) {
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = Screen.DetailScreen.route) {
+
+    NavHost(navController = navController, startDestination = Screen.HomeScreen.route) {
         composable(Screen.DetailScreen.route) {
-            DetailScreen(viewModel = viewModel, modifier = modifier, context = context)
+            DetailScreen(
+                viewModel = viewModel,
+                modifier = modifier,
+                context = context,
+                navController = navController
+            )
+        }
+        composable(Screen.HomeScreen.route) {
+            HomeScreen(
+                navController = navController,
+                context = context,
+                viewModel = viewModel
+            )
         }
     }
 }
@@ -32,13 +46,14 @@ fun App(
 @Composable
 fun PhonePreview() {
     TestCombineTheme {
-        App(viewModel = AppViewModel(), modifier = Modifier.fillMaxSize(), LocalContext.current)
+        App(AppViewModel(), Modifier.fillMaxSize(), LocalContext.current)
     }
 }
+
 @Preview(showBackground = true, device = Devices.FOLDABLE)
 @Composable
 fun FoldablePreview() {
     TestCombineTheme {
-        App(viewModel = AppViewModel(),Modifier.fillMaxSize(), context = LocalContext.current)
+        App(AppViewModel(), Modifier.fillMaxSize(), LocalContext.current)
     }
 }
