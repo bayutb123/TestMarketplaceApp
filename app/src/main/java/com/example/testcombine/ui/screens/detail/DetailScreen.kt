@@ -12,11 +12,11 @@ import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.testcombine.showToast
 import com.example.testcombine.ui.AppViewModel
-import com.example.testcombine.ui.screens.detail.components.Content
-import com.example.testcombine.ui.screens.detail.components.Title
-import com.example.testcombine.ui.screens.detail.components.ActionButton
-import com.example.testcombine.ui.screens.detail.components.Banner
-import com.example.testcombine.ui.screens.detail.components.Recommendation
+import com.example.testcombine.ui.screens.detail.section.Content
+import com.example.testcombine.ui.screens.detail.section.Title
+import com.example.testcombine.ui.screens.detail.section.ActionButton
+import com.example.testcombine.ui.screens.detail.section.Banner
+import com.example.testcombine.ui.screens.detail.section.Recommendation
 import com.example.testcombine.ui.theme.TestCombineTheme
 
 @Composable
