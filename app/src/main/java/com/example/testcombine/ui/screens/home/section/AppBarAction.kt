@@ -3,6 +3,7 @@ package com.example.testcombine.ui.screens.home.section
 import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -12,10 +13,12 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -23,8 +26,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
@@ -42,7 +47,7 @@ fun AppBarAction(
     valueSearch: String,
     navController: NavController,
     onValueChanged: (String) -> Unit,
-    context : Context
+    context: Context
 ) {
     Row(
         modifier = modifier
@@ -52,7 +57,8 @@ fun AppBarAction(
     ) {
         Row(
             modifier = modifier
-                .weight(1f).padding(start = 8.dp)
+                .weight(1f)
+                .padding(start = 8.dp)
         ) {
             BasicTextField(
                 value = valueSearch,
@@ -65,19 +71,44 @@ fun AppBarAction(
                         shape = RoundedCornerShape(8.dp)
                     )
                     .fillMaxWidth()
-                    .height(40.dp).padding(8.dp),
+                    .height(40.dp)
+                    .padding(8.dp),
                 textStyle = TextStyle(
                     color = MaterialTheme.colorScheme.primary,
                     textAlign = TextAlign.Start,
                     lineHeight = TextUnit.Unspecified,
                     fontSize = 16.sp,
                 ),
+                decorationBox = { innerTextField ->
+                    Row(
+                        modifier.align(Alignment.CenterVertically),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Search, contentDescription = "search",
+                            tint = MaterialTheme.colorScheme.primary
+                        )
+                        Box {
+                            if (valueSearch.isEmpty()) {
+                                Text(
+                                    text = "Cari di TukerIn sekarang..",
+                                    fontSize = 18.sp,
+                                    fontWeight = FontWeight.Normal,
+                                    color = Color.LightGray
+                                )
+                            }
+                            innerTextField()
+                        }
+                    }
+                },
                 singleLine = true,
-                maxLines = 1
+                maxLines = 1,
             )
         }
         IconButton(onClick = {
-            showToast(context, "Clicked Chat") }) {
+            showToast(context, "Clicked Chat")
+        }) {
             Icon(
                 imageVector = Icons.Default.Email,
                 contentDescription = "Chat",
@@ -100,7 +131,8 @@ fun AppBarActionPreview() {
                 valueSearch = search,
                 navController = rememberNavController(),
                 onValueChanged = { search = it },
-                context = LocalContext.current)
+                context = LocalContext.current
+            )
         }
     }
 }
