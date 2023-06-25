@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -26,6 +27,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.testcombine.R
 import com.example.testcombine.ui.AppViewModel
+import com.example.testcombine.ui.theme.GoldenBadge
 import com.example.testcombine.ui.theme.TestCombineTheme
 
 @Composable
@@ -50,7 +52,10 @@ fun SellerSection(
     viewModel: AppViewModel
 ) {
     Card(
-        modifier = modifier.padding(16.dp, 8.dp)
+        modifier = modifier.padding(16.dp, 8.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.secondaryContainer
+        )
     ) {
         Row(
             modifier
@@ -63,17 +68,21 @@ fun SellerSection(
                 painter = painterResource(id = R.drawable.baseline_account_circle_24),
                 contentDescription = null,
                 modifier.size(60.dp),
-                colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.primary)
+                colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onSecondaryContainer)
             )
             Column(
                 verticalArrangement = Arrangement.spacedBy(4.dp),
                 modifier = modifier.weight(1f)
             ) {
-                Text(text = "Bayu Tantra Bramandhita", fontWeight = FontWeight.Medium)
+                Text(
+                    text = "Bayu Tantra Bramandhita",
+                    fontWeight = FontWeight.Medium,
+                    color = MaterialTheme.colorScheme.onSecondaryContainer
+                )
                 Box(
                     modifier = modifier
                         .background(
-                            MaterialTheme.colorScheme.primaryContainer,
+                            MaterialTheme.colorScheme.onSecondaryContainer,
                             RoundedCornerShape(6.dp)
                         )
                         .padding(0.dp, 4.dp)
@@ -89,7 +98,7 @@ fun SellerSection(
                                     modifier = modifier.size(12.dp),
                                     painter = painterResource(id = R.drawable.baseline_star_active_24),
                                     contentDescription = null,
-                                    colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onPrimaryContainer)
+                                    colorFilter = ColorFilter.tint(GoldenBadge)
                                 )
                             }
                         }
@@ -100,10 +109,10 @@ fun SellerSection(
                 painter = painterResource(id = R.drawable.baseline_call_24),
                 contentDescription = "Call",
                 modifier = modifier
-                    .background(MaterialTheme.colorScheme.primary, shape = CircleShape)
+                    .background(MaterialTheme.colorScheme.onSecondaryContainer, shape = CircleShape)
                     .size(45.dp)
                     .padding(8.dp),
-                colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onPrimary)
+                colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.secondaryContainer)
             )
         }
     }
@@ -121,7 +130,8 @@ fun ProductSection(
             text = stringResource(R.string.dummy_product_description),
             fontSize = MaterialTheme.typography.bodyMedium.fontSize,
             fontWeight = MaterialTheme.typography.bodyMedium.fontWeight,
-            modifier = modifier.fillMaxWidth()
+            modifier = modifier.fillMaxWidth(),
+            color = MaterialTheme.colorScheme.onSurface
         )
     }
 }

@@ -6,11 +6,15 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Search
@@ -30,6 +34,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
@@ -47,65 +52,62 @@ fun AppBarAction(
     valueSearch: String,
     navController: NavController,
     onValueChanged: (String) -> Unit,
+    onDone: (String) -> Unit,
     context: Context
 ) {
     Row(
         modifier = modifier
             .fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        Row(
+        BasicTextField(
+            value = valueSearch,
+            onValueChange = {
+                onValueChanged(it)
+            },
             modifier = modifier
+                .background(
+                    MaterialTheme.colorScheme.onPrimary,
+                    shape = RoundedCornerShape(8.dp)
+                )
                 .weight(1f)
-                .padding(start = 8.dp)
-        ) {
-            BasicTextField(
-                value = valueSearch,
-                onValueChange = {
-                    onValueChanged(it)
-                },
-                modifier = modifier
-                    .background(
-                        MaterialTheme.colorScheme.onPrimary,
-                        shape = RoundedCornerShape(8.dp)
+                .height(40.dp)
+                .padding(end = 8.dp),
+            textStyle = TextStyle(
+                color = MaterialTheme.colorScheme.primary,
+                textAlign = TextAlign.Start,
+                lineHeight = TextUnit.Unspecified,
+                fontSize = 16.sp,
+            ),
+            decorationBox = { innerTextField ->
+                Row(
+                    modifier.align(Alignment.CenterVertically),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Search, contentDescription = "search",
+                        tint = MaterialTheme.colorScheme.primary
                     )
-                    .fillMaxWidth()
-                    .height(40.dp)
-                    .padding(8.dp),
-                textStyle = TextStyle(
-                    color = MaterialTheme.colorScheme.primary,
-                    textAlign = TextAlign.Start,
-                    lineHeight = TextUnit.Unspecified,
-                    fontSize = 16.sp,
-                ),
-                decorationBox = { innerTextField ->
-                    Row(
-                        modifier.align(Alignment.CenterVertically),
-                        horizontalArrangement = Arrangement.spacedBy(8.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Search, contentDescription = "search",
-                            tint = MaterialTheme.colorScheme.primary
-                        )
-                        Box {
-                            if (valueSearch.isEmpty()) {
-                                Text(
-                                    text = "Cari di TukerIn sekarang..",
-                                    fontSize = 18.sp,
-                                    fontWeight = FontWeight.Normal,
-                                    color = Color.LightGray
-                                )
-                            }
-                            innerTextField()
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Box {
+                        if (valueSearch.isEmpty()) {
+                            Text(
+                                text = "Cari di TukerIn sekarang..",
+                                fontSize = 16.sp,
+                                fontWeight = FontWeight.Normal,
+                                color = Color.LightGray
+                            )
                         }
+                        innerTextField()
                     }
-                },
-                singleLine = true,
-                maxLines = 1,
-            )
-        }
+                }
+            },
+            keyboardActions = KeyboardActions(onDone = { onDone(valueSearch)
+            }),
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+            singleLine = true,
+            maxLines = 1
+        )
         IconButton(onClick = {
             showToast(context, "Clicked Chat")
         }) {
@@ -117,7 +119,6 @@ fun AppBarAction(
         }
     }
 }
-
 
 @Preview(showBackground = true)
 @Composable
@@ -131,7 +132,8 @@ fun AppBarActionPreview() {
                 valueSearch = search,
                 navController = rememberNavController(),
                 onValueChanged = { search = it },
-                context = LocalContext.current
+                context = LocalContext.current,
+                onDone = {}
             )
         }
     }

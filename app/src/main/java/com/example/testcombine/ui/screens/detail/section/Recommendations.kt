@@ -75,7 +75,7 @@ fun Recommendation(modifier: Modifier = Modifier) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ItemsView(modifier: Modifier = Modifier, text: String) {
+private fun ItemsView(modifier: Modifier = Modifier, text: String) {
     ElevatedCard(
         onClick = { },
         modifier = modifier
