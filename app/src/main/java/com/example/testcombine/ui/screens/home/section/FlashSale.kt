@@ -33,25 +33,18 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.testcombine.R
+import com.example.testcombine.data.apisimulation.Product
+import com.example.testcombine.toIdr
+import com.example.testcombine.ui.AppViewModel
 import com.example.testcombine.ui.screens.Screen
 import com.example.testcombine.ui.theme.TestCombineTheme
 
 @Composable
-fun FlashSales(modifier: Modifier = Modifier, navController: NavController) {
-    val list = listOf(
-        "Nama Barang Flash Sales 1",
-        "Nama Barang Flash Sales 2",
-        "Nama Barang Flash Sales 3",
-        "Nama Barang Flash Sales 4",
-        "Nama Barang Flash Sales 1",
-        "Nama Barang Flash Sales 2",
-        "Nama Barang Flash Sales 3",
-        "Nama Barang Flash Sales 4",
-        "Nama Barang Flash Sales 1",
-        "Nama Barang Flash Sales 2",
-        "Nama Barang Flash Sales 3",
-        "Nama Barang Flash Sales 4"
-    )
+fun FlashSales(
+    modifier: Modifier = Modifier,
+    navController: NavController,
+    eventItems: List<Product>
+) {
     Column(
         modifier = modifier
             .fillMaxWidth()
@@ -64,8 +57,13 @@ fun FlashSales(modifier: Modifier = Modifier, navController: NavController) {
             fontWeight = MaterialTheme.typography.titleLarge.fontWeight
         )
         LazyRow(contentPadding = PaddingValues(16.dp, 0.dp), content = {
-            items(list) { text ->
-                ItemsView(text = text) {
+            items(eventItems) { item ->
+                ItemsView(
+                    name = item.name,
+                    eventPrice = item.eventPrice?.let { toIdr(it) },
+                    originalPrice = toIdr(item.price),
+                    eventValue = item.eventValue
+                ) {
                     navController.navigate(Screen.DetailScreen.route)
                 }
             }
@@ -75,7 +73,14 @@ fun FlashSales(modifier: Modifier = Modifier, navController: NavController) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun ItemsView(modifier: Modifier = Modifier, text: String, onClick: () -> Unit) {
+private fun ItemsView(
+    modifier: Modifier = Modifier,
+    name: String,
+    eventPrice: String?,
+    originalPrice: String,
+    eventValue: String?,
+    onClick: () -> Unit
+) {
     ElevatedCard(
         onClick = onClick,
         modifier = modifier
@@ -102,35 +107,39 @@ private fun ItemsView(modifier: Modifier = Modifier, text: String, onClick: () -
                     ),
                 contentAlignment = Alignment.Center
             ) {
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally, modifier = modifier
-                        .padding(4.dp, 4.dp)
-                        .fillMaxWidth()
-                ) {
-                    Text(
-                        textAlign = TextAlign.End,
-                        text = "Minggu Gaming",
-                        fontWeight = FontWeight.SemiBold,
-                        fontSize = 12.sp,
-                        color = MaterialTheme.colorScheme.onPrimary
-                    )
+                if (eventValue != null) {
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally, modifier = modifier
+                            .padding(4.dp, 4.dp)
+                            .fillMaxWidth()
+                    ) {
+                        Text(
+                            textAlign = TextAlign.End,
+                            text = eventValue,
+                            fontWeight = FontWeight.SemiBold,
+                            fontSize = 12.sp,
+                            color = MaterialTheme.colorScheme.onPrimary
+                        )
+                    }
                 }
             }
             Column(
                 modifier = modifier
-                    .padding( 8.dp)
+                    .padding(8.dp)
             ) {
-                Text(text = text, maxLines = 2)
+                Text(text = name, maxLines = 2, fontSize = 14.sp, lineHeight = 16.sp, modifier = modifier.padding(bottom = 4.dp))
+                if (eventPrice != null) {
+                    Text(
+                        text = "Rp $originalPrice",
+                        maxLines = 1,
+                        fontSize = 10.sp,
+                        textAlign = TextAlign.Center,
+                        textDecoration = TextDecoration.LineThrough,
+                        color = MaterialTheme.colorScheme.onPrimaryContainer
+                    )
+                }
                 Text(
-                    text = "Rp 13.000.000",
-                    maxLines = 1,
-                    fontSize = 10.sp,
-                    textAlign = TextAlign.Center,
-                    textDecoration = TextDecoration.LineThrough,
-                    color = MaterialTheme.colorScheme.onPrimaryContainer
-                )
-                Text(
-                    text = stringResource(id = R.string.dummy_product_price),
+                    text = "Rp ${eventPrice ?: originalPrice}",
                     fontWeight = FontWeight.Bold,
                     maxLines = 1
                 )
@@ -143,6 +152,9 @@ private fun ItemsView(modifier: Modifier = Modifier, text: String, onClick: () -
 @Composable
 fun PreviewFlashSales() {
     TestCombineTheme {
-        FlashSales(navController = NavController(context = LocalContext.current))
+        FlashSales(
+            navController = NavController(context = LocalContext.current),
+            eventItems = AppViewModel().getEventItems()
+        )
     }
 }

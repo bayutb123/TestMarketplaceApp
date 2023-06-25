@@ -38,6 +38,7 @@ fun DetailScreen(
     context: Context,
     navController: NavController
 ) {
+    val itemId = 1
     Scaffold(
         topBar = {
             TopAppBar(
@@ -68,8 +69,10 @@ fun DetailScreen(
                     viewModel.setStatus(viewModel.favourite.value)
                     showToast(context = context, "Favourite : ${viewModel.favourite.value}")
                 }
-                Title()
-                Content(viewModel = viewModel)
+                Title(
+                    itemDetail = viewModel.getItemDetail(itemId)
+                )
+                Content(itemDetail = viewModel.getItemDetail(itemId))
                 Recommendation()
             }
             ActionButton()

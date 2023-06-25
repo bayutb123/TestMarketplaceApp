@@ -20,6 +20,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.testcombine.R
@@ -42,7 +43,6 @@ fun HomeScreen(
 ) {
     val scrollBehavior =
         TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState())
-
 
     Scaffold(
         topBar = {
@@ -73,7 +73,7 @@ fun HomeScreen(
                     Category()
                 }
                 PromoBanner()
-                FlashSales(navController = navController)
+                FlashSales(navController = navController, eventItems = viewModel.getEventItems())
                 Button(
                     onClick = { navController.navigate(Screen.DetailScreen.route) },
                     modifier = Modifier.fillMaxWidth()

@@ -26,6 +26,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.testcombine.R
+import com.example.testcombine.data.apisimulation.Product
 import com.example.testcombine.ui.AppViewModel
 import com.example.testcombine.ui.theme.GoldenBadge
 import com.example.testcombine.ui.theme.TestCombineTheme
@@ -33,15 +34,15 @@ import com.example.testcombine.ui.theme.TestCombineTheme
 @Composable
 fun Content(
     modifier: Modifier = Modifier,
-    viewModel: AppViewModel
+    itemDetail: Product
 ) {
     Column(
         modifier
             .fillMaxWidth()
     ) {
-        SellerSection(viewModel = viewModel)
-        ProductSection()
-        MapsSection(modifier = modifier, viewModel = viewModel)
+        SellerSection()
+        ProductSection(description = itemDetail.description)
+        MapsSection(modifier = modifier)
     }
 }
 
@@ -49,7 +50,6 @@ fun Content(
 @Composable
 fun SellerSection(
     modifier: Modifier = Modifier, rating: Int = 5,
-    viewModel: AppViewModel
 ) {
     Card(
         modifier = modifier.padding(16.dp, 8.dp),
@@ -120,14 +120,15 @@ fun SellerSection(
 
 @Composable
 fun ProductSection(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    description: String
 ) {
     Column(
         modifier = modifier
             .padding(16.dp, 0.dp)
     ) {
         Text(
-            text = stringResource(R.string.dummy_product_description),
+            text = description,
             fontSize = MaterialTheme.typography.bodyMedium.fontSize,
             fontWeight = MaterialTheme.typography.bodyMedium.fontWeight,
             modifier = modifier.fillMaxWidth(),
@@ -137,7 +138,7 @@ fun ProductSection(
 }
 
 @Composable
-fun MapsSection(modifier: Modifier, viewModel: AppViewModel) {
+fun MapsSection(modifier: Modifier) {
 
     Column(modifier = modifier.padding(16.dp, 8.dp)) {
         Box(
@@ -150,12 +151,13 @@ fun MapsSection(modifier: Modifier, viewModel: AppViewModel) {
             Text(text = "Google Map")
         }
     }
+
 }
 
 @Preview(showBackground = true, device = "id:pixel_5")
 @Composable
 fun ContentPreview() {
     TestCombineTheme {
-        Content(viewModel = AppViewModel())
+        Content(itemDetail = AppViewModel().getItemDetail(1))
     }
 }

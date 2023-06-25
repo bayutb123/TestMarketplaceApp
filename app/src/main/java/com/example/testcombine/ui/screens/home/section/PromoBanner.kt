@@ -25,12 +25,13 @@ import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.testcombine.R
+import com.example.testcombine.data.apisimulation.Product
 import com.example.testcombine.ui.theme.TestCombineTheme
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun PromoBanner(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     val list = listOf("Banner", "Banner", "Banner", "Banner", "Banner")
     val bannerCount = list.size
