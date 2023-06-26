@@ -3,13 +3,9 @@ package com.example.testcombine.data.apisimulation
 import kotlin.random.Random
 
 class ApiSimulation {
-
-
-
     companion object {
-
-        val eventItems = mutableListOf<Product>()
-        val category = mutableListOf<ProductCategories>()
+        private val eventItems = mutableListOf<Product>()
+        private val category = mutableListOf<ProductCategories>()
         init {
             category.add(
                 ProductCategories(1, "Rumah tangga")
