@@ -13,12 +13,14 @@ open class AppViewModel : ViewModel() {
         favourite.value = !status
     }
 
-
     fun getItemDetail(id: Int): Product {
         return ApiSimulation.apiGetItemDetail(id)
     }
-
+    fun getAllItems(): List<Product> {
+        return ApiSimulation.apiGetAllItems()
+    }
     fun getEventItems(): List<Product> {
         return ApiSimulation.apiGetEventItems()
     }
+
 }

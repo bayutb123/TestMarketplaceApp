@@ -26,6 +26,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.testcombine.R
 import com.example.testcombine.ui.AppViewModel
 import com.example.testcombine.ui.screens.Screen
+import com.example.testcombine.ui.screens.home.section.AllItems
 import com.example.testcombine.ui.screens.home.section.BottomAppBar
 import com.example.testcombine.ui.screens.home.section.Category
 import com.example.testcombine.ui.screens.home.section.FlashSales
@@ -74,6 +75,9 @@ fun HomeScreen(
                 }
                 PromoBanner()
                 FlashSales(navController = navController, eventItems = viewModel.getEventItems())
+                AllItems(allItems = viewModel.getAllItems()) {
+                    navController.navigate(Screen.DetailScreen.route)
+                }
                 Button(
                     onClick = { navController.navigate(Screen.DetailScreen.route) },
                     modifier = Modifier.fillMaxWidth()
@@ -83,8 +87,10 @@ fun HomeScreen(
                         contentDescription = null
                     )
                 }
+
             }
         }
+
     }
 }
 
