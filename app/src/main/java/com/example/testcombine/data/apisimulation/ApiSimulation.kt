@@ -36,10 +36,8 @@ class ApiSimulation {
         fun apiGetEventItems(): List<Product> {
             return eventItems
         }
-
         fun apiGetItemDetail(id: Int) : Product {
             return eventItems[id]
         }
-
     }
 }
